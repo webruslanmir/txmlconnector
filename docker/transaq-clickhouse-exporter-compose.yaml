@@ -1,5 +1,4 @@
-version: '2'
-
+version: '3.9'
 services:
   server:
     image: kmlebedev/txmlconnector:6.32.2.21.23
@@ -16,11 +15,13 @@ services:
         soft: 262144
         hard: 262144
   grafana:
-    image: grafana/grafana:8.2.5
+    image: grafana/grafana:latest
+    # image: grafana/grafana:latest
     ports:
       - "3000:3000"
     volumes:
-      - ./compose/grafana:/etc/grafana
+      - ./compose/grafana/dashboards:/etc/grafana/dashboards
+      - ./compose/grafana/provisioning:/etc/grafana/provisioning
     environment:
       GF_INSTALL_PLUGINS: "https://github.com/ilgizar/ilgizar-candlestick-panel/raw/master/pack/ilgizar-candlestick-panel.zip;ilgizar-candlestick-panel,https://github.com/gipong/grafana-groupedbarchart-panel/archive/master.zip;grafana-groupedbarchart-panel,vertamedia-clickhouse-datasource"
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "grafana-groupedbarchart-panel,vertamedia-clickhouse-datasource,ilgizar-candlestick-panel"
